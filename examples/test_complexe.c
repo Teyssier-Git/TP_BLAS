@@ -13,16 +13,18 @@ int main (int argc, char **argv)
  complexe_float_t c1= {1.0, 2.0} ;
  complexe_float_t c2= {3.0, 6.0} ;
  complexe_float_t c3 ;
+ complexe_float_t c3m ;
 
  complexe_double_t cd1 ;
  complexe_double_t cd2 ;
  complexe_double_t cd3 ;
+ complexe_double_t cd3m ;
 
  unsigned long long int start, end ;
  int i ;
 
  init_flop () ;
- 
+
  c3 = add_complexe_float (c1, c2) ;
 
  printf ("c3.r %f c3.i %f\n", c3.real, c3.imaginary) ;
@@ -35,7 +37,7 @@ int main (int argc, char **argv)
  printf ("cd3.r %f cd3.i %f\n", cd3.real, cd3.imaginary) ;
 
  start =_rdtsc () ;
- 
+
  for (i = 0 ; i < NB_FOIS; i++)
    {
      cd3 = add_complexe_double (cd1, cd2) ;
@@ -46,5 +48,20 @@ int main (int argc, char **argv)
   printf ("apres boucle cd3.real %f cd3.imaginary %f %lld cycles \n", cd3.real, cd3.imaginary, end-start) ;
 
   calcul_flop ("calcul complexe ", NB_FOIS*4, end-start) ;
+  c3m = mult_complexe_float (c1, c2) ;
+
+  printf ("c3m.r %f c3m.i %f\n", c3m.real, c3m.imaginary) ;
+  start =_rdtsc () ;
+
+  for (i = 0 ; i < NB_FOIS; i++)
+    {
+      cd3m = mult_complexe_double (cd1, cd2) ;
+    }
+
+  end = _rdtsc () ;
+
+   printf ("apres boucle cd3m.real %f cd3m.imaginary %f %lld cycles \n", cd3m.real, cd3m.imaginary, end-start) ;
+
+   calcul_flop ("calcul complexe ", NB_FOIS*4, end-start) ;
   exit (0) ;
 }
