@@ -1,4 +1,4 @@
-all: test_complexe2 test_complexe test_dot test_dot_dyn test_copy
+all: test_complexe2 test_complexe test_dot test_dot_dyn test_copy test_swap
 
 INC_DIR=../include
 
@@ -41,6 +41,12 @@ test_copy.o: test_copy.c  $(INC_DIR)/complexe.h
 
 test_copy: test_copy.o flop.o
 	gcc -o test_copy test_copy.o flop.o $(OPTIONS_LINK_STATIC)
+
+test_swap.o: test_swap.c  $(INC_DIR)/complexe.h
+	gcc $(OPTIONS_COMPIL) -c test_swap.c
+
+test_swap: test_swap.o flop.o
+	gcc -o test_swap test_swap.o flop.o $(OPTIONS_LINK_STATIC)
 
 
 clean:
