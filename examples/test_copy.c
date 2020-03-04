@@ -35,7 +35,7 @@ int main (int argc, char **argv)
  for (int idx=0; idx<TAILLE; idx++) {
      printf("{%.0f %.0f}", c2[idx].real, c2[idx].imaginary);
  }
- printf("]\n");
+ printf("]");
 
  mncblas_ccopy(TAILLE, c1, 1, c2, 1);
 
@@ -43,13 +43,13 @@ int main (int argc, char **argv)
  for (int idx=0; idx<TAILLE; idx++) {
      printf("{%.0f %.0f}", c2[idx].real, c2[idx].imaginary);
  }
- printf("]\n");
+ printf("]");
 
  printf("cd2 avant\n [");
  for (int idx=0; idx<TAILLE; idx++) {
      printf("{%.0f %.0f}", cd2[idx].real, cd2[idx].imaginary);
  }
- printf("]\n");
+ printf("]");
 
  mncblas_zcopy(TAILLE, cd1, 1, cd2, 1);
 
@@ -57,7 +57,7 @@ int main (int argc, char **argv)
  for (int idx=0; idx<TAILLE; idx++) {
      printf("{%.0f %.0f}", c2[idx].real, c2[idx].imaginary);
  }
- printf("]\n");
+ printf("]\n\n\n");
 
  init_flop () ;
 
