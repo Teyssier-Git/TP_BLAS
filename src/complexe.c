@@ -1,5 +1,5 @@
 #include "complexe.h"
-
+#include <stdio.h>
 complexe_float_t add_complexe_float (const complexe_float_t c1, const complexe_float_t c2)
 {
   complexe_float_t r ;
@@ -31,7 +31,7 @@ complexe_float_t mult_complexe_float (const complexe_float_t c1, const complexe_
 }
 
 complexe_double_t mult_complexe_double (const complexe_double_t c1, const complexe_double_t c2)
-  {
+{
   complexe_double_t r ;
 
   r.real = (c1.real*c2.real) - (c1.imaginary*c2.imaginary) ;
@@ -54,8 +54,8 @@ complexe_float_t div_complexe_float (const complexe_float_t c1, const complexe_f
   }
   else{
     printf("division par 0!");
+    return r;
   }
-
 
 }
 
@@ -72,4 +72,6 @@ complexe_double_t div_complexe_double (const complexe_double_t c1, const complex
   }
   else{
     printf("division par 0!");
+    return r;
   }
+}
