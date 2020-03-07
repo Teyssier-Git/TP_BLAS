@@ -10,7 +10,7 @@
 
 int main (int argc, char **argv)
 {
-  
+
     complexe_float_t c1= {1.0, 2.0} ;
     complexe_float_t c2= {3.0, 6.0} ;
     complexe_float_t c3 ;
@@ -74,7 +74,7 @@ int main (int argc, char **argv)
 
     for (i = 0 ; i < NB_FOIS; i++)
     {
-      cd3d = div_complexe_double (cd1, cd3d) ;
+      cd3d = div_complexe_double (cd3d, cd2) ;
     }
 
     end = _rdtsc () ;
