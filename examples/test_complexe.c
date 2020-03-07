@@ -42,7 +42,7 @@ int main (int argc, char **argv)
 
   for (i = 0 ; i < NB_FOIS; i++)
   {
-    cd3 = add_complexe_double (cd1, cd2) ;
+    cd3 = add_complexe_double (cd1, cd3) ;
   }
 
   end = _rdtsc () ;
@@ -57,7 +57,7 @@ int main (int argc, char **argv)
 
   for (i = 0 ; i < NB_FOIS; i++)
   {
-    cd3m = mult_complexe_double (cd1, cd2) ;
+    cd3m = mult_complexe_double (cd1, cd3m) ;
   }
 
   end = _rdtsc () ;
@@ -73,7 +73,7 @@ int main (int argc, char **argv)
 
   for (i = 0 ; i < NB_FOIS; i++)
   {
-    cd3d = div_complexe_double (cd1, cd2) ;
+    cd3d = div_complexe_double (cd3d, cd2) ;
   }
 
   end = _rdtsc () ;
