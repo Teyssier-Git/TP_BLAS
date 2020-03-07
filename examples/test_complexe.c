@@ -14,7 +14,7 @@ int main (int argc, char **argv)
   complexe_float_t c2= {3.0, 6.0} ;
   complexe_float_t c3 ;
   complexe_float_t c3m ;
-  comlpexe_float_t c3d ;
+  complexe_float_t c3d ;
 
   complexe_double_t cd1 ;
   complexe_double_t cd2 ;
