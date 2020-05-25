@@ -1,5 +1,5 @@
 #include "mnblas.h"
-#include "../include/complexe.h"
+#include "complexe.h"
 #include <stdio.h>
 
 float  mnblas_sasum(const int N, const float *X, const int incX) {
