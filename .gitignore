@@ -20,3 +20,5 @@ examples/test_complexe
 examples/flop.h
 
 examples/flop.c
+
+examples/test_nrm2
