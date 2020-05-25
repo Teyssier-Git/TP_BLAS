@@ -34,10 +34,10 @@ void mncblas_ccopy(const int N, const void *X, const int incX,
     register unsigned int i = 0 ;
     register unsigned int j = 0 ;
 
-    void **y = (void **)Y;
-    void **x = (void **)X;
+    float *y = (float *)Y;
+    float *x = (float *)X;
 
-    for (; ((i < N) && (j < N)) ; i += incX, j += incY)
+    for (; ((i < N*2) && (j < N*2)) ; i += incX, j += incY)
       {
         y [j] = x [i] ;
       }
@@ -51,10 +51,10 @@ void mncblas_zcopy(const int N, const void *X, const int incX,
     register unsigned int i = 0 ;
     register unsigned int j = 0 ;
 
-    void **y = (void **)Y;
-    void **x = (void **)X;
+    double *y = (double *)Y;
+    double *x = (double *)X;
 
-    for (; ((i < N) && (j < N)) ; i += incX, j += incY)
+    for (; ((i < N*2) && (j < N*2)) ; i += incX, j += incY)
       {
         y [j] = x [i] ;
       }

@@ -50,4 +50,4 @@ test_swap: test_swap.o flop.o
 
 
 clean:
-	rm -f *.o test_dot test_dot_dyn test_complexe test_complexe2 *~
+	rm -f *.o test_dot test_dot_dyn test_complexe test_complexe2 test_copy test_swap *~
