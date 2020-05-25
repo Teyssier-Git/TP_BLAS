@@ -21,10 +21,10 @@ int main (int argc, char **argv)
  int i ;
 
  for (int idx = 0; idx<TAILLE; idx++) {
-     c1[idx] = (complexe_float_t){0.0,0.0};
-     cd1[idx] = (complexe_double_t){0.0,0.0};
-     c2[idx] = (complexe_float_t){1.0,1.0};
-     cd2[idx] = (complexe_double_t){1.0,1.0};
+     c1[idx] = (complexe_float_t){(float)idx,(float)idx};
+     c2[idx] = (complexe_float_t){0.0,0.0};
+     cd1[idx] = (complexe_double_t){(double)idx,(double)idx};
+     cd2[idx] = (complexe_double_t){0.0,0.0};
  }
 
  printf("===TEST mncblas_cswap()===\n");
@@ -89,7 +89,9 @@ printf("\n===TEST mncblas_zswap()===\n");
      mncblas_sswap(TAILLE, f1, 1, f2, 1);
  }
  end = _rdtsc () ;
- printf ("apres boucle %lld cycles \n\n", end-start) ;
+ printf ("apres boucle %lld cycles \n", end-start) ;
+ calcul_octet("sswap", TAILLE * NB_FOIS * 3, end-start);
+ printf("\n");
 
 
  printf("===TEST perf mncblas_dswap===\n");
@@ -101,7 +103,9 @@ printf("\n===TEST mncblas_zswap()===\n");
      mncblas_dswap(TAILLE, d1, 1, d2, 1);
  }
  end = _rdtsc () ;
- printf ("apres boucle %lld cycles \n\n", end-start) ;
+ printf ("apres boucle %lld cycles \n", end-start) ;
+ calcul_octet("dswap", TAILLE * NB_FOIS * 3, end-start);
+ printf("\n");
 
 
  printf("===TEST perf mncblas_cswap===\n");
@@ -111,17 +115,19 @@ printf("\n===TEST mncblas_zswap()===\n");
      mncblas_cswap(TAILLE, c1, 1, c2, 1);
  }
  end = _rdtsc () ;
- printf ("apres boucle %lld cycles \n\n", end-start) ;
+ printf ("apres boucle %lld cycles \n", end-start) ;
+ calcul_octet("cswap", TAILLE * NB_FOIS * 6, end-start);
+ printf("\n");
 
-
- printf("===TEST perf mncblas_cswap===\n");
+ printf("===TEST perf mncblas_zswap===\n");
  init_flop () ;
  start =_rdtsc () ;
  for (i = 0 ; i < NB_FOIS; i++) {
-     mncblas_cswap(TAILLE, cd1, 1, cd2, 1);
+     mncblas_zswap(TAILLE, cd1, 1, cd2, 1);
  }
  end = _rdtsc () ;
- printf ("apres boucle %lld cycles \n\n", end-start) ;
-
+ printf ("apres boucle %lld cycles \n", end-start) ;
+ calcul_octet("zswap", TAILLE * NB_FOIS * 6, end-start);
+ printf("\n");
   exit (0) ;
 }
