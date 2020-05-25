@@ -67,7 +67,7 @@ void   mncblas_cdotu_sub(const int N, const void *X, const int incX,
 
     for (i = 0 ; i < N ; i += incX)
       {
-        add_complexe_float(*dot, mult_complexe_float(fX[i], fY[j]));
+        *dot = add_complexe_float(*dot, mult_complexe_float(fX[i], fY[j]));
         j+=incY ;
       }
 }
@@ -86,7 +86,7 @@ void   mncblas_cdotc_sub(const int N, const void *X, const int incX,
 
     for (i = 0 ; i < N ; i += incX)
       {
-        add_complexe_float(*dot, mult_complexe_float(conj_complexe_float(fX[i]), conj_complexe_float(fY[j])));
+        *dot = add_complexe_float(*dot, mult_complexe_float(conj_complexe_float(fX[i]), conj_complexe_float(fY[j])));
         j+=incY ;
       }
 }
@@ -105,7 +105,7 @@ void   mncblas_zdotu_sub(const int N, const void *X, const int incX,
 
     for (i = 0 ; i < N ; i += incX)
       {
-        add_complexe_double(*dot, mult_complexe_double(fX[i], fY[j]));
+        *dot = add_complexe_double(*dot, mult_complexe_double(fX[i], fY[j]));
         j+=incY ;
       }
 }
@@ -124,7 +124,7 @@ void   mncblas_zdotc_sub(const int N, const void *X, const int incX,
 
     for (i = 0 ; i < N ; i += incX)
       {
-        add_complexe_double(*dot, mult_complexe_double(conj_complexe_double(fX[i]), conj_complexe_double(fY[j])));
+        *dot = add_complexe_double(*dot, mult_complexe_double(conj_complexe_double(fX[i]), conj_complexe_double(fY[j])));
         j+=incY ;
       }
 }
