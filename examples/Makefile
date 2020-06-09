@@ -1,52 +1,59 @@
-# une bibliotheque statique (libmnblas.a)
-# une bibliotheque dynamique (libmnblasdyn.so)
+all: test_complexe2 test_complexe test_dot test_dot_dyn test_copy test_iamax test_iamin
 
-all: libmnblas.a libmnblasdyn.so
+INC_DIR=../include
 
 LIB_DIR=../lib
-INC_DIR=../include
-OPTIM=-O2 -fopenmp
 
-OPTIONS=-O2 -Wall -fPIC $(OPTIM) -I$(INC_DIR)
-# Bibliothèque statique
+LIBST=-lmnblas
+LIBDYN=-lmnblasdyn
 
-libmnblas.a: copy.o swap.o dot.o complexe.o iamax.o iamin.o
-	rm -f libmnblas.a $(LIB_DIR)/libmnblas.a
-	ar -r libmnblas.a copy.o swap.o dot.o complexe.o iamax.o iamin.o
-	cp libmnblas.a $(LIB_DIR)
+OPTIONS_COMPIL  =-Wall -O2 -fPIC -I$(INC_DIR)
 
-# Bibliothèque dynamique
+OPTIONS_LINK_STATIC  =   -fopenmp -L$(LIB_DIR) $(LIBST)
+OPTIONS_LINK_DYN  = -fopenmp -L$(LIB_DIR) $(LIBDYN)
 
-libmnblasdyn.so:copy.o swap.o dot.o complexe.o iamax.o iamin.o
-	rm -f libmnblasdyn.so $(LIB_DIR)/libmnblasdyn.so
-	gcc -shared -o libmnblasdyn.so copy.o swap.o dot.o complexe.o iamax.o iamin.o
-	cp libmnblasdyn.so $(LIB_DIR)
+test_dot: test_dot.o flop.o $(LIB_DIR)/libmnblas.a
+	gcc -o test_dot test_dot.o flop.o $(OPTIONS_LINK_STATIC)
 
-complexe.o: $(INC_DIR)/complexe.h complexe.c
-	gcc $(OPTIONS) -c complexe.c
+flop.o: flop.c flop.h
+	gcc $(OPTIONS_COMPIL) -c flop.c
 
-# BLAS 1
+test_dot_dyn: test_dot.o flop.o
+	gcc -o test_dot_dyn flop.o test_dot.o $(OPTIONS_LINK_DYN)
 
-copy.o : copy.c $(INC_DIR)/mnblas.h
-	gcc $(OPTIONS) -c copy.c
+test_dot.o: test_dot.c $(INC_DIR)/mnblas.h
+	gcc $(OPTIONS_COMPIL) -c test_dot.c
 
-swap.o : swap.c $(INC_DIR)/mnblas.h
-	gcc  $(OPTIONS) -c swap.c
+test_complexe.o: test_complexe.c  $(INC_DIR)/complexe.h
+	gcc $(OPTIONS_COMPIL) -c test_complexe.c
 
-dot.o : dot.c $(INC_DIR)/mnblas.h
-	gcc  $(OPTIONS) -c dot.c
+test_complexe: test_complexe.o flop.o
+	gcc -o test_complexe test_complexe.o flop.o $(OPTIONS_LINK_STATIC)
 
-iamax.o : iamax.c $(INC_DIR)/mnblas.h
-	gcc  $(OPTIONS) -c iamax.c
+test_complexe2.o: test_complexe2.c  $(INC_DIR)/complexe2.h
+	gcc $(OPTIONS_COMPIL) -c test_complexe2.c
 
-iamin.o : iamin.c $(INC_DIR)/mnblas.h
-	gcc  $(OPTIONS) -c iamin.c
+test_complexe2: test_complexe2.o flop.o
+	gcc -o test_complexe2 test_complexe2.o flop.o $(OPTIONS_LINK_STATIC)
 
-# BLAS 2
+test_copy.o: test_copy.c  $(INC_DIR)/complexe.h
+	gcc $(OPTIONS_COMPIL) -c test_copy.c
 
-# BLAS 3
+test_copy: test_copy.o flop.o
+	gcc -o test_copy test_copy.o flop.o $(OPTIONS_LINK_STATIC)
+
+test_iamax.o: test_iamax.c  $(INC_DIR)/mnblas.h $(INC_DIR)/complexe.h
+	gcc $(OPTIONS_COMPIL) -c test_iamax.c
+
+test_iamax: test_iamax.o flop.o $(LIB_DIR)/libmnblas.a
+	gcc -o test_iamax test_iamax.o flop.o $(OPTIONS_LINK_STATIC)
+
+test_iamin.o: test_iamin.c  $(INC_DIR)/mnblas.h $(INC_DIR)/complexe.h
+	gcc $(OPTIONS_COMPIL) -c test_iamin.c
+
+test_iamin: test_iamin.o flop.o $(LIB_DIR)/libmnblas.a
+	gcc -o test_iamin test_iamin.o flop.o $(OPTIONS_LINK_STATIC)
+
 
 clean:
-	rm -f *.o *.a *.so *~  $(INC_DIR)/*~ $(LIB_DIR)/libmnblasdyn.so  $(LIB_DIR)/libmnblas.a 
-
-
+	rm -f *.o test_dot test_dot_dyn test_complexe test_iamax test_iamin test_complexe2 *~
