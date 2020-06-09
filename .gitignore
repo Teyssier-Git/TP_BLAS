@@ -22,3 +22,7 @@ examples/flop.h
 examples/flop.c
 
 examples/test_nrm2
+
+examples/test_iamin
+
+examples/test_iamax
