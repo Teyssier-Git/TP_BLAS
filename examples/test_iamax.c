@@ -107,7 +107,7 @@ int main (int argc, char **argv) {
         start = _rdtsc () ;
             res = mnblas_isamax (VECSIZE, vef1, 1) ;
         end = _rdtsc () ;
-        
+
         printf ("mnblas_isamax %d : res = %d nombre de cycles: %Ld\n", i, res, end-start) ;
         calcul_flop ("isamax ", 2 * VECSIZE, end-start) ;
    }
