@@ -80,6 +80,23 @@ int main (int argc, char **argv) {
 
     printf("TEST GEMM\n");
 
+       printf("\n=== mncblas_sgemm ===\n\n");
+       if (1) {
+           float matA[4*4], matB[4*4], matC[4*4];
+           for (int i=0; i<4; i++) {
+               for (int j=0; j<4; j++) {
+                   matA[4*i+j] = i+1;
+                   matB[4*i+j] = i+1;
+                   matC[4*i+j] = i+1;
+               }
+           }
+           mncblas_sgemm(MNCblasRowMajor, MNCblasNoTrans,MNCblasNoTrans, 4, 4,4, 1.0, matA,4, matB, 4,1.0, matC, 4);
+
+           printf("      | %.1f %.1f %.1f %.1f |   \n",  matC[0], matC[1], matC[2], matC[3]);
+           printf("      | %.1f %.1f %.1f %.1f |   \n",  matC[4], matC[5], matC[6], matC[7]);
+           printf("      | %.1f %.1f %.1f %.1f |   \n",  matC[8], matC[9], matC[10], matC[11]);
+           printf("      | %.1f %.1f %.1f %.1f |   \n",  matC[12], matC[13], matC[14], matC[15]);
+       }
     printf("\n=== mncblas_sgemm ===\n\n");
     for (i = 0 ; i < NB_FOIS; i++) {
         start = _rdtsc () ;
