@@ -3,61 +3,77 @@
 void mncblas_scopy(const int N, const float *X, const int incX,
                  float *Y, const int incY)
 {
-    register unsigned int i = 0 ;
-    register unsigned int j = 0 ;
+    register unsigned int i;
 
-    for (; ((i < N) && (j < N)) ; i += incX, j += incY)
-    {
-      Y [j] = X [i] ;
+    int min;
+    if (N/incX + 1 < N/incY + 1) {
+        min = N/incX+1;
+    } else {
+        min = N/incY+1;
     }
 
-    return ;
+    #pragma omp parallel for
+    for (i=0; i < min; i++) {
+      Y [i*incY] = X [i*incX] ;
+    }
 }
 
 void mncblas_dcopy(const int N, const double *X, const int incX,
                  double *Y, const int incY)
 {
-    register unsigned int i = 0 ;
-    register unsigned int j = 0 ;
+    register unsigned int i;
 
-    for (; ((i < N) && (j < N)) ; i += incX, j += incY)
-      {
-        Y [j] = X [i] ;
-      }
+    int min;
+    if (N/incX + 1 < N/incY + 1) {
+        min = N/incX+1;
+    } else {
+        min = N/incY+1;
+    }
 
-    return ;
+    #pragma omp parallel for
+    for (i=0; i < min; i++) {
+      Y [i*incY] = X [i*incX] ;
+    }
 }
 
 void mncblas_ccopy(const int N, const void *X, const int incX,
 		                    void *Y, const int incY)
 {
-    register unsigned int i = 0 ;
-    register unsigned int j = 0 ;
-
     float *y = (float *)Y;
     float *x = (float *)X;
 
-    for (; ((i < N*2) && (j < N*2)) ; i += incX, j += incY)
-      {
-        y [j] = x [i] ;
-      }
+    register unsigned int i;
 
-    return ;
+    int min;
+    if (2*N/incX + 1 < 2*N/incY + 1) {
+        min = 2*N/incX+1;
+    } else {
+        min = 2*N/incY+1;
+    }
+
+    #pragma omp parallel for
+    for (i=0; i < min; i++) {
+      y[i*incY] = x[i*incX] ;
+    }
 }
 
 void mncblas_zcopy(const int N, const void *X, const int incX,
 		                    void *Y, const int incY)
 {
-    register unsigned int i = 0 ;
-    register unsigned int j = 0 ;
-
     double *y = (double *)Y;
     double *x = (double *)X;
 
-    for (; ((i < N*2) && (j < N*2)) ; i += incX, j += incY)
-      {
-        y [j] = x [i] ;
-      }
+    register unsigned int i;
 
-    return ;
+    int min;
+    if (2*N/incX + 1 < 2*N/incY + 1) {
+        min = 2*N/incX+1;
+    } else {
+        min = 2*N/incY+1;
+    }
+
+    #pragma omp parallel for
+    for (i=0; i < min; i++) {
+      y[i*incY] = x[i*incX] ;
+    }
 }
