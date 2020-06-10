@@ -26,3 +26,5 @@ examples/test_nrm2
 examples/test_iamin
 
 examples/test_iamax
+
+examples/test_gemv
