@@ -109,10 +109,7 @@ void mncblas_sgemm(MNCBLAS_LAYOUT layout, MNCBLAS_TRANSPOSE TransA,
             }
           }
         }
-#include "../include/mnblas.h"
-#include "../include/complexe.h"
-#include <stdio.h>
-
+/*
 void mncblas_sgemm(MNCBLAS_LAYOUT layout, MNCBLAS_TRANSPOSE TransA,
   MNCBLAS_TRANSPOSE TransB, const int M, const int N,
   const int K, const float alpha, const float *A,
@@ -211,3 +208,4 @@ void mncblas_sgemm(MNCBLAS_LAYOUT layout, MNCBLAS_TRANSPOSE TransA,
                                  }
                               }
         }
+*/
