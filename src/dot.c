@@ -32,7 +32,7 @@ float mncblas_sdot(const int N, const float *X, const int incX,
       min = N/incY+1;
   }
 
-  #pragma omp parallel for
+  #pragma omp parallel for reduction(+:dot)
   for (i = 0 ; i < min ; i ++)
     {
       dot += X [i*incX] * Y [i*incY] ;
@@ -54,7 +54,7 @@ double mncblas_ddot(const int N, const double *X, const int incX,
         min = N/incY+1;
     }
 
-    #pragma omp parallel for
+    #pragma omp parallel for reduction(+:dot)
     for (i = 0 ; i < min ; i++)
       {
         dot += X [i*incX] * Y [i*incY] ;
@@ -77,15 +77,20 @@ void   mncblas_cdotu_sub(const int N, const void *X, const int incX,
 
     complexe_float_t *fX = (complexe_float_t *)X;
     complexe_float_t *fY = (complexe_float_t *)Y;
-    complexe_float_t *dot = (complexe_float_t *)dotu;
-    dot->real = 0.0;
-    dot->imaginary = 0.0;
+    complexe_float_t dot;
+    dot.real = 0.0;
+    dot.imaginary = 0.0;
 
-    #pragma omp parallel for
+    #pragma omp declare reduction(add_cf : complexe_float_t : omp_out = add_complexe_float(omp_out, omp_in))
+    #pragma omp parallel for reduction(add_cf:dot)
     for (i = 0 ; i < min ; i++)
       {
-        *dot = add_complexe_float(*dot, mult_complexe_float(fX[i*incX], fY[i*incY]));
+        dot = add_complexe_float(dot, mult_complexe_float(fX[i*incX], fY[i*incY]));
       }
+
+      complexe_float_t *rep = (complexe_float_t *)dotu;
+      rep->real = dot.real;
+      rep->imaginary = dot.imaginary;
 }
 
 void   mncblas_cdotc_sub(const int N, const void *X, const int incX,
@@ -102,15 +107,20 @@ void   mncblas_cdotc_sub(const int N, const void *X, const int incX,
 
     complexe_float_t *fX = (complexe_float_t *)X;
     complexe_float_t *fY = (complexe_float_t *)Y;
-    complexe_float_t *dot = (complexe_float_t *)dotc;
-    dot->real = 0.0;
-    dot->imaginary = 0.0;
+    complexe_float_t dot;
+    dot.real = 0.0;
+    dot.imaginary = 0.0;
 
-    #pragma omp parallel for
+    #pragma omp declare reduction(add_cf : complexe_float_t : omp_out = add_complexe_float(omp_out, omp_in))
+    #pragma omp parallel for reduction(add_cf:dot)
     for (i = 0 ; i < min ; i++)
       {
-        *dot = add_complexe_float(*dot, mult_complexe_float(conj_complexe_float(fX[i*incX]), conj_complexe_float(fY[i*incY])));
+        dot = add_complexe_float(dot, mult_complexe_float(conj_complexe_float(fX[i*incX]), conj_complexe_float(fY[i*incY])));
       }
+
+      complexe_float_t *rep = (complexe_float_t *)dotc;
+      rep->real = dot.real;
+      rep->imaginary = dot.imaginary;
 }
 
 void   mncblas_zdotu_sub(const int N, const void *X, const int incX,
@@ -127,15 +137,20 @@ void   mncblas_zdotu_sub(const int N, const void *X, const int incX,
 
     complexe_double_t *fX = (complexe_double_t *)X;
     complexe_double_t *fY = (complexe_double_t *)Y;
-    complexe_double_t *dot = (complexe_double_t *)dotu;
-    dot->real = 0.0;
-    dot->imaginary = 0.0;
+    complexe_double_t dot;
+    dot.real = 0.0;
+    dot.imaginary = 0.0;
 
-    #pragma omp parallel for
+    #pragma omp declare reduction(add_cd : complexe_double_t : omp_out = add_complexe_double(omp_out, omp_in))
+    #pragma omp parallel for reduction(add_cd:dot)
     for (i = 0 ; i < min ; i++)
       {
-        *dot = add_complexe_double(*dot, mult_complexe_double(fX[i*incX], fY[i*incY]));
+        dot = add_complexe_double(dot, mult_complexe_double(fX[i*incX], fY[i*incY]));
       }
+
+      complexe_double_t *rep = (complexe_double_t *)dotu;
+      rep->real = dot.real;
+      rep->imaginary = dot.imaginary;
 }
 
 void   mncblas_zdotc_sub(const int N, const void *X, const int incX,
@@ -152,13 +167,17 @@ void   mncblas_zdotc_sub(const int N, const void *X, const int incX,
 
     complexe_double_t *fX = (complexe_double_t *)X;
     complexe_double_t *fY = (complexe_double_t *)Y;
-    complexe_double_t *dot = (complexe_double_t *)dotc;
-    dot->real = 0.0;
-    dot->imaginary = 0.0;
+    complexe_double_t dot;
+    dot.real = 0.0;
+    dot.imaginary = 0.0;
 
-    #pragma omp parallel for
-    for (i = 0 ; i < min ; i++)
-      {
-        *dot = add_complexe_double(*dot, mult_complexe_double(conj_complexe_double(fX[i*incX]), conj_complexe_double(fY[i*incY])));
-      }
+    #pragma omp declare reduction(add_cd : complexe_double_t : omp_out = add_complexe_double(omp_out, omp_in))
+    #pragma omp parallel for reduction(add_cd:dot)
+    for (i = 0 ; i < min ; i++) {
+        dot = add_complexe_double(dot, mult_complexe_double(conj_complexe_double(fX[i*incX]), conj_complexe_double(fY[i*incY])));
+    }
+
+    complexe_double_t *rep = (complexe_double_t *)dotc;
+    rep->real = dot.real;
+    rep->imaginary = dot.imaginary;
 }
